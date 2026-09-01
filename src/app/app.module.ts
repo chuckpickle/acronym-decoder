@@ -27,7 +27,6 @@ import {PopupComponent} from './popup/popup.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ConfigurationService} from './core/configuration/configuration.service';
 import {AppMaterialModule} from './custom-modules/app-material.module';
-import {FlexLayoutModule} from '@angular/flex-layout';
 import {LookupComponent} from './lookup/lookup.component';
 import {CoreModule} from './core/core.module';
 
@@ -42,7 +41,6 @@ import {CoreModule} from './core/core.module';
         CoreModule,
         AppRoutingModule,
         NgbModule,
-        FlexLayoutModule,
         AppMaterialModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {
 }

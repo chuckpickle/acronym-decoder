@@ -49,6 +49,25 @@ h4, h6 {
     margin: 5em auto 1em;
 }
 
+#decoderOptions .option-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#decoderOptions .option-half {
+    flex: 0 0 50%;
+    box-sizing: border-box;
+    max-width: 50%;
+}
+
+#decoderOptions .save-row {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+}
+
 #decoderOptions .options-info {
     font-size: 15px;
     line-height: 1.7;

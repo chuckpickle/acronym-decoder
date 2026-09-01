@@ -39,7 +39,7 @@ See the License for the specific language governing permissions and limitations 
         </div>
     </form>
 
-    <div class="spinner-container" fxLayout="column" fxLayoutAlign="center center" *ngIf="isLoading">
+    <div class="spinner-container" *ngIf="isLoading">
         <mat-spinner [diameter]="40" [color]="'accent'"></mat-spinner>
         <p>Looking up definitions for {{previousSearchTerm}}...</p>
     </div>

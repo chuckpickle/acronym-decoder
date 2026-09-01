@@ -126,6 +126,10 @@ See the License for the specific language governing permissions and limitations 
 
 .spinner-container {
     margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .spinner-container p {
