@@ -3,6 +3,7 @@
   "compilerOptions": {
     "outDir": "./dist/",
     "sourceMap": true,
+    "strict": false,
     "noImplicitAny": false,
     "esModuleInterop": true,
     "resolveJsonModule": true,
@@ -18,9 +19,17 @@
     "typeRoots": [
       "node_modules/@types"
     ],
+    "types": [
+      "chrome"
+    ],
     "lib": [
       "es2022",
       "dom"
     ]
-  }
+  },
+  "exclude": [
+    "e2e",
+    "node_modules",
+    "dist"
+  ]
 }
