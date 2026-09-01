@@ -38,8 +38,8 @@
   "devDependencies": {
     "@angular-builders/custom-webpack": "^20.0.0",
     "@angular-devkit/build-angular": "^20.3.35",
-    "@angular/cli": "^20.3.35",
-    "@angular/compiler-cli": "^20.3.30",
+    "@angular/cli": "^21.2.22",
+    "@angular/compiler-cli": "^21.2.22",
     "@angular/language-service": "^20.3.30",
     "@types/chrome": "^0.0.178",
     "@types/jasmine": "^3.10.3",
