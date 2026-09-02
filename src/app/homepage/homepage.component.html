@@ -42,18 +42,18 @@ See the License for the specific language governing permissions and limitations 
             <hr>
             <h4>Options</h4>
             <hr>
-            <div fxLayout="row" fxLayoutAlign="space-evenly center">
-                <h6 fxFlex="50%">On page lookup:</h6>
-                <mat-form-field fxFlex="50%">
+            <div class="option-row">
+                <h6 class="option-half">On page lookup:</h6>
+                <mat-form-field class="option-half">
                     <mat-select [(value)]="options.lookupEnabled" (valueChange)="optionsChanged()">
                         <mat-option [value]="true">Enabled</mat-option>
                         <mat-option [value]="false">Disabled</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div fxLayout="row" fxLayoutAlign="space-evenly center">
-                <h6 fxFlex="50%">Mouse click modifier:</h6>
-                <mat-form-field fxFlex="50%">
+            <div class="option-row">
+                <h6 class="option-half">Mouse click modifier:</h6>
+                <mat-form-field class="option-half">
                     <mat-select [(value)]="options.lookupModifier" (valueChange)="optionsChanged()">
                         <mat-option [value]="0">Only Double Click</mat-option>
                         <mat-option [value]="1">Ctrl + Double Click</mat-option>
@@ -63,9 +63,9 @@ See the License for the specific language governing permissions and limitations 
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div fxLayout="row" fxLayoutAlign="space-evenly center">
-                <h6 fxFlex="50%">"Definition Not Found" dialog:</h6>
-                <mat-form-field fxFlex="50%">
+            <div class="option-row">
+                <h6 class="option-half">"Definition Not Found" dialog:</h6>
+                <mat-form-field class="option-half">
                     <mat-select [(value)]="options.notFoundDialog" (valueChange)="optionsChanged()">
                         <mat-option [value]="true">Enabled</mat-option>
                         <mat-option [value]="false">Disabled</mat-option>
@@ -73,7 +73,7 @@ See the License for the specific language governing permissions and limitations 
                 </mat-form-field>
             </div>
             <hr>
-            <div fxLayoutAlign="center">
+            <div class="option-actions">
                 <button mat-raised-button [color]="savingOptions || optionsSaved ? 'primary' : 'accent'" type="button"
                         id="saveOptions" class="save-options"
                         (click)="saveOptions()">
