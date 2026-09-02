@@ -3,6 +3,7 @@
   "compilerOptions": {
     "outDir": "./dist/",
     "sourceMap": true,
+    "strict": false,
     "noImplicitAny": false,
     "esModuleInterop": true,
     "resolveJsonModule": true,
@@ -17,6 +18,12 @@
     "target": "es2022",
     "typeRoots": [
       "node_modules/@types"
+    ],
+    "types": [
+      "chrome",
+      "jasmine",
+      "jasminewd2",
+      "node"
     ]
   }
 }

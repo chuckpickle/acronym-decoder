@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy} from '@angular/core';
 import {ConfigurationService} from '../core/configuration/configuration.service';
 import {OptionsModel, OptionsModelKeys} from '../models/options.model';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -25,6 +25,7 @@ import {ConfigModel} from '../models/config.model';
     templateUrl: './homepage.component.html',
     styleUrls: ['./homepage.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class HomepageComponent implements OnInit {

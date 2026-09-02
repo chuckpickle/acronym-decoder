@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and limitations 
 import {NgModule, Directive, Input} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 
 import {AppRoutingModule} from './app-routing.module';
 
@@ -41,7 +41,7 @@ import {CoreModule} from './core/core.module';
         CoreModule,
         AppRoutingModule,
         NgbModule,
-        AppMaterialModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
+        AppMaterialModule], providers: [provideHttpClient(withXhr(), withInterceptorsFromDi())] })
 export class AppModule {
 }
 
