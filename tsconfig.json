@@ -1,26 +1,39 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "outDir": "./dist/",
-    "sourceMap": true,
+    "target": "es2020",
+    "lib": [
+      "es2020",
+      "dom",
+      "dom.iterable"
+    ],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
     "noImplicitAny": false,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "module": "es6",
-    "jsx": "react",
     "allowJs": true,
-    "declaration": false,
-    "moduleResolution": "node",
+    "isolatedModules": true,
     "skipLibCheck": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "target": "es5",
-    "typeRoots": [
-      "node_modules/@types"
+    "sourceMap": true,
+    "noEmit": true,
+    "types": [
+      "chrome",
+      "vitest/globals",
+      "node"
     ],
-    "lib": [
-      "es2017",
-      "dom"
-    ]
-  }
+    "strictPropertyInitialization": false
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "content-script/**/*.ts",
+    "vite.config.mts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

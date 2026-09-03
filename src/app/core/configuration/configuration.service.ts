@@ -14,58 +14,61 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import {ConfigModel} from '../../models/config.model';
 
-@Injectable()
+export interface ExtensionManifest {
+    version: string;
+    [key: string]: unknown;
+}
+
 export class ConfigurationService {
 
-    static isBackendOnline: boolean;
+    static isBackendOnline = true;
 
     // file names for chrome assets
     manifestFileName = 'manifest.json';
     configFileName = 'config.json';
 
-    manifest: any;
-    config: ConfigModel;
+    manifest?: ExtensionManifest;
+    config?: ConfigModel;
 
+    private manifestRequest?: Promise<ExtensionManifest>;
+    private configRequest?: Promise<ConfigModel>;
 
-    constructor(private http: HttpClient) {
+    constructor(private readonly fetchFn: typeof fetch = (...args) => fetch(...args)) {
         ConfigurationService.isBackendOnline = true;
     }
 
-    getJsonFileContent(fileName: string): Observable<any> {
-        return this.http.get(chrome.runtime.getURL(fileName));
+    async getJsonFileContent<T = unknown>(fileName: string): Promise<T> {
+        const response = await this.fetchFn(chrome.runtime.getURL(fileName));
+        if (!response.ok) {
+            throw new Error(`Failed to load ${fileName}: ${response.statusText}`);
+        }
+        return response.json() as Promise<T>;
     }
 
-    getExtensionVersion(): Observable<string> {
-        return new Observable(observer => {
-            if (this.manifest) {
-                observer.next(this.manifest.version);
-            } else {
-                this.getJsonFileContent(this.manifestFileName)
-                    .subscribe(manifest => {
-                        this.manifest = manifest;
-                        observer.next(manifest.version);
-                    });
-            }
-        });
+    getExtensionVersion(): Promise<string> {
+        if (this.manifest) {
+            return Promise.resolve(this.manifest.version);
+        }
+        this.manifestRequest ??= this.getJsonFileContent<ExtensionManifest>(this.manifestFileName)
+            .then(manifest => {
+                this.manifest = manifest;
+                return manifest;
+            });
+        return this.manifestRequest.then(manifest => manifest.version);
     }
 
-    getConfiguration(): Observable<ConfigModel> {
-        return new Observable(observer => {
-            if (this.config) {
-                observer.next(this.config);
-            } else {
-                this.getJsonFileContent(this.configFileName)
-                    .subscribe((config: ConfigModel) => {
-                        this.config = config;
-                        observer.next(config);
-                    });
-            }
-        });
+    getConfiguration(): Promise<ConfigModel> {
+        if (this.config) {
+            return Promise.resolve(this.config);
+        }
+        this.configRequest ??= this.getJsonFileContent<ConfigModel>(this.configFileName)
+            .then(config => {
+                this.config = config;
+                return config;
+            });
+        return this.configRequest;
     }
 
 }

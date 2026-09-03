@@ -14,7 +14,7 @@ Whatever it is, Acronym-Decoder (A-D!) aims to help you get through the alphabet
 * Visit `chrome://extensions` on your chrome browser
 * Enable Developer mode and click Load unpacked as seen in the image below
 ![](readme-assets/loading.png)
-* Select the `dist/` folder in your project directory
+* Select the `dist/browser/` folder in your project directory
 
 Note: modifications to content-script files will require you to refresh the extension from [chrome://extensions](chrome://extensions)
 

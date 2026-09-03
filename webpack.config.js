@@ -10,12 +10,12 @@ module.exports = {
     devtool: 'source-map',
     output: {
         filename: '[name].js',
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'dist/browser'),
     },
     module: {
         rules: [{
             test: /\.tsx?$/,
-            use: 'ts-loader',
+            use: {loader: 'ts-loader', options: {configFile: 'tsconfig.webpack.json'}},
             exclude: /node_modules/,
         },],
     },
