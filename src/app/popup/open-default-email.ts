@@ -16,8 +16,6 @@ See the License for the specific language governing permissions and limitations 
 
 /**
  * Opens the user's default mail client via a short-lived `mailto:` tab.
- * (Same logic as `openDefaultEmailAddress` in `src/background.ts`, kept separate so the
- * popup bundle does not pull in the service worker.)
  */
 export function openDefaultEmailAddress(email: string): void {
     const mailtoPath = 'mailto:' + email;

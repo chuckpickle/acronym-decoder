@@ -19,8 +19,6 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "noEmit": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
     "types": [
       "chrome",
       "vitest/globals",
@@ -36,12 +34,6 @@
   ],
   "exclude": [
     "node_modules",
-    "dist",
-    "**/*.spec.ts",
-    "src/test.ts",
-    "src/testing/spec-helpers.ts",
-    "src/app/**/*.component.ts",
-    "src/app/**/*.module.ts",
-    "src/app/custom-modules/**"
+    "dist"
   ]
 }

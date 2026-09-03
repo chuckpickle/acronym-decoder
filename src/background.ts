@@ -10,16 +10,6 @@ var config = c;
 
 initializeOptions();
 
-export function openDefaultEmailAddress(email: string): void{
-    const mailtoPath = 'mailto:' + email;
-
-    chrome.tabs.create({'url': mailtoPath}, function (tab) {
-        setTimeout(function () {
-            if (tab.id !== undefined) chrome.tabs.remove(tab.id);
-        }, 500);
-    });
-}
-
 chrome.storage.onChanged.addListener(
     (changes, namespace) => {
         console.log('Acronym Decoder options changed', changes);
