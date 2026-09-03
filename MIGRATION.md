@@ -9,7 +9,7 @@ Child sessions update their row in the status table and post a summary back to t
 |---|---|---|---|---|
 | Foundation: Vite/Vitest toolchain, models, `ConfigurationService`, `DefinitionService`, `ServicesProvider` context, `App` hash router, placeholders, `MIGRATION.md` | Managing session | `devin/*-react-foundation` | done | 16 Vitest tests pass; `npm run build` produces loadable `dist/browser` |
 | `LookupComponent` → `src/app/lookup/Lookup.tsx` (+ `background.ts` / `content-script` injection via React) | Child A | _pending_ | pending | |
-| `HomepageComponent` → `src/app/homepage/Homepage.tsx` (options page) | Child B | _pending_ | pending | |
+| `HomepageComponent` → `src/app/homepage/Homepage.tsx` (options page) | Child B | `devin/1788407746-react-homepage` | done | 9 Vitest tests in `Homepage.test.tsx` (25 total in suite); `npm run typecheck` / `test:ci` / `build` pass; `DomSanitizer` replaced by `sanitizeUrl()` scheme allow-list |
 | `PopupComponent` → `src/app/popup/Popup.tsx` (search popup) | Child C | _pending_ | pending | |
 | Remove Angular artifacts (`*.module.ts`, `*.component.*`, `*.spec.ts`, `angular.json`, Karma, `@angular/*` deps) and verify extension loads | Managing session | | pending | |
 
