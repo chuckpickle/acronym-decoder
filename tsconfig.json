@@ -17,8 +17,17 @@
     "experimentalDecorators": true,
     "target": "ES2022",
     "useDefineForClassFields": false,
+    "types": [
+      "chrome",
+      "node"
+    ],
     "typeRoots": [
       "node_modules/@types"
     ]
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "e2e"
+  ]
 }
