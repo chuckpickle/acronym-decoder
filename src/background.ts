@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { OptionsModel, OptionsModelKeys } from './app/models/options.model';
 import * as c from './config.json';
 
-var options = null;
+var options: OptionsModel = new OptionsModel();
 var glossaryName = "glossary.json";
 var config = c;
 
@@ -15,7 +15,7 @@ export function openDefaultEmailAddress(email: string): void{
 
     chrome.tabs.create({'url': mailtoPath}, function (tab) {
         setTimeout(function () {
-            chrome.tabs.remove(tab.id);
+            if (tab.id !== undefined) chrome.tabs.remove(tab.id);
         }, 500);
     });
 }
@@ -25,7 +25,7 @@ chrome.storage.onChanged.addListener(
         console.log('Acronym Decoder options changed', changes);
         for(const key in changes){
             if(OptionsModelKeys.indexOf(key) > -1){
-                options[key] = changes[key].newValue;
+                Object.assign(options, {[key]: changes[key].newValue});
             }
         }
     }
@@ -80,7 +80,7 @@ function generateLookup(data){
                 popupHTML += "</div>";
 
                 chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-                    chrome.tabs.sendMessage(tabs[0].id, {
+                    chrome.tabs.sendMessage(tabs[0].id!, {
                         command: 'lookupElement',
                         element: popupHTML,
                         coord: data.coord
@@ -154,7 +154,7 @@ function initializeOptions(){
             console.log('Acronym Decoder options changed', changes);
             for(const key in changes){
                 if(OptionsModelKeys.indexOf(key) > -1){
-                    options[key] = changes[key].newValue;
+                    Object.assign(options, {[key]: changes[key].newValue});
                 }
             }
         }

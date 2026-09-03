@@ -21,8 +21,8 @@ import {ModifierEnum} from '../src/app/models/modifier.enum';
 
 export class RuntimeListener {
 
-    toShadow: HTMLElement;
-    shadow: ShadowRoot;
+    toShadow?: HTMLElement;
+    shadow?: ShadowRoot;
     lastData: any;
     options: OptionsModel = new OptionsModel();
     singleClickListenerActive = false;
@@ -189,7 +189,7 @@ export class RuntimeListener {
     };
 
     selectionChangedListener = () => {
-        const selection: Selection = window.getSelection();
+        const selection = window.getSelection()!;
         setTimeout(() => {
             if (!selection.isCollapsed && !this.singleClickListenerActive && !this.dblClickWithMeta) {
                 this.singleClickListenerActive = true;
@@ -218,7 +218,7 @@ export class RuntimeListener {
                     takeWhile(() => c > 0))
                     .subscribe(i => {
                         c++;
-                        chrome.tabs.remove(tab.id);
+                        if (tab.id !== undefined) chrome.tabs.remove(tab.id);
                     });
             });
         }

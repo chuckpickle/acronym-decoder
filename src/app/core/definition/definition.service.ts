@@ -14,55 +14,51 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {Injectable} from '@angular/core';
-import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import {ConfigurationService} from '../configuration/configuration.service';
-import { map } from 'rxjs/operators';
 import {LookupModel} from '../../models/lookup.model';
 import {ConfigModel} from '../../models/config.model';
 import {DatabaseType} from '../../models/database-type.enum';
-import {LookupApiResponseModel} from '../../models/lookup-api-response.model';
 import {LookupSource} from '../../models/lookup-source.enum';
-import { timeout } from 'rxjs/operators';
 
+interface RemoteLookupResponse {
+    slurp: LookupModel[];
+}
 
-@Injectable()
 export class DefinitionService {
 
     // file names for chrome assets
     glossaryFileName = 'glossary.json';
-    previousSearchTerm: string;
-    config: ConfigModel;
+    previousSearchTerm?: string;
+    config?: ConfigModel;
 
-
-    constructor(private configurationService: ConfigurationService,
-                private http: HttpClient) {
-        this.populateConfiguration();
+    constructor(private readonly configurationService: ConfigurationService,
+                private readonly fetchFn: typeof fetch = (...args) => fetch(...args)) {
+        this.populateConfiguration().catch(error => {
+            console.log('Error: ' + error);
+        });
     }
 
     /**
      * Populates the configuration
      */
-    populateConfiguration(): void {
-        this.configurationService.getConfiguration().subscribe(
-            (config: ConfigModel) => {
-                this.config = config;
-            }
-        );
+    populateConfiguration(): Promise<ConfigModel> {
+        return this.configurationService.getConfiguration().then(config => {
+            this.config = config;
+            return config;
+        });
     }
 
     /**
      * Routes the searching method by checking if the remote lookup is enabled or not
      *
-     * @param {string} searchTerm
-     * @param {LookupSource} source - used for analytics. It can be the popup search or on screen search
-     * @returns {Observable<LookupModel[]>}
+     * @param searchTerm
+     * @param source - used for analytics. It can be the popup search or on screen search
      */
-    lookupTerm(searchTerm: string, source: LookupSource): Observable<LookupModel[]> {
+    async lookupTerm(searchTerm: string, source: LookupSource): Promise<LookupModel[]> {
         console.log('Acronym Decoder is looking up: ' + searchTerm);
 
-        if (this.config.enableRemoteLookup) {
+        const config = this.config ?? await this.populateConfiguration();
+        if (config.enableRemoteLookup) {
             return this.lookupTermRemotely(searchTerm, source);
         } else {
             return this.lookupTermLocally(searchTerm, source);
@@ -70,69 +66,51 @@ export class DefinitionService {
     }
 
     /**
-     * Looks up the searched term from the local glossary file and returns it to the observable
+     * Looks up the searched term from the local glossary file
      *
-     * @param {string} searchTerm
-     * @param {LookupSource} source - used for analytics. It can be the popup search or on screen search
-     * @returns {Observable<LookupModel[]>}
+     * @param searchTerm
+     * @param source - used for analytics. It can be the popup search or on screen search
      */
-    lookupTermLocally(searchTerm: string, source: LookupSource): Observable<LookupModel[]> {
-        return new Observable(observer => {
-            this.configurationService.getJsonFileContent(this.glossaryFileName)
-                .subscribe(glossary => {
-                    this.previousSearchTerm = searchTerm;
-                    const definitions = glossary.filter(termObj =>
-                        termObj.acronym.toLowerCase() === searchTerm.toLowerCase()
-                    );
-                    this.gaLookupEvent(source, DatabaseType.local, searchTerm, definitions.length);
+    async lookupTermLocally(searchTerm: string, source: LookupSource): Promise<LookupModel[]> {
+        const glossary = await this.configurationService.getJsonFileContent<LookupModel[]>(this.glossaryFileName);
+        this.previousSearchTerm = searchTerm;
+        const definitions = glossary.filter(termObj =>
+            termObj.acronym.toLowerCase() === searchTerm.toLowerCase()
+        );
+        this.gaLookupEvent(source, DatabaseType.local, searchTerm, definitions.length);
 
-                    console.log('Search results (locally): ', definitions);
-                    observer.next(definitions);
-                });
-        });
+        console.log('Search results (locally): ', definitions);
+        return definitions;
     }
 
     /**
-     * Looks up the searched term by calling the lookup API and returns it to the observable
-     * If there's an issue with the API call, it will fallback to searching locally
+     * Looks up the searched term by calling the lookup API. Rejects on a non-OK response.
      *
-     * @param {string} searchTerm
-     * @param {LookupSource} source
-     * @returns {Observable<LookupModel[]>}
+     * @param searchTerm
+     * @param source
      */
-    lookupTermRemotely(searchTerm: string, source: LookupSource): Observable<LookupModel[]> {
-        const lookupURL = this.config.lookupApiUrl + searchTerm + "&dep=false";
-    
-        return new Observable(observer => {
-            fetch(lookupURL)
-            .then(this.handleErrors)
-            .then(response => response.json())
-            .then(json => {
-                const definitions = json.slurp;
-                console.log('Search results (remotely): ', definitions);
-                observer.next(definitions);
-            })
-            .catch(error => {
-                console.log("Error: " + error);
-            });
-        });
+    async lookupTermRemotely(searchTerm: string, source: LookupSource): Promise<LookupModel[]> {
+        const lookupURL = this.config!.lookupApiUrl + searchTerm + '&dep=false';
+
+        const response = await this.fetchFn(lookupURL).then(this.handleErrors);
+        const json: RemoteLookupResponse = await response.json();
+        const definitions = json.slurp;
+        this.previousSearchTerm = searchTerm;
+        this.gaLookupEvent(source, DatabaseType.server, searchTerm, definitions.length);
+        console.log('Search results (remotely): ', definitions);
+        return definitions;
     }
 
-    handleErrors(response){
-        if(!response.ok) throw Error(response.statusText);
+    handleErrors(response: Response): Response {
+        if (!response.ok) throw Error(response.statusText);
         return response;
     }
 
     /**
      * Fires Google Analytics event
-     *
-     * @param {LookupSource} lookupSource
-     * @param {DatabaseType} databaseType
-     * @param {string} term
-     * @param {number} numResults
      */
-    gaLookupEvent(lookupSource: LookupSource, databaseType: DatabaseType, term: string, numResults: number) {
-        
+    gaLookupEvent(lookupSource: LookupSource, databaseType: DatabaseType, term: string, numResults: number): void {
+
     }
 
 }
