@@ -55,6 +55,24 @@ h4, h6 {
     color: #19222a;
 }
 
+#decoderOptions .option-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#decoderOptions .option-col {
+    flex: 1 1 50%;
+    max-width: 50%;
+}
+
+#decoderOptions .save-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 #decoderOptions .save-options {
     width: 200px;
     mat-spinner {

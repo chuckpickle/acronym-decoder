@@ -2,7 +2,6 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../out-tsc/app",
-    "baseUrl": "./",
     "module": "es2022",
     "types": [
       "chrome"
@@ -13,5 +12,8 @@
     "**/*.spec.ts",
     "testing/**/*.ts",
     "background.ts"
-  ]
+  ],
+  "angularCompilerOptions": {
+    "strictTemplates": false
+  }
 }
