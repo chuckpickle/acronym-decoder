@@ -25,7 +25,7 @@ See the License for the specific language governing permissions and limitations 
     height: 34px;
 }
 
-.search-button mat-icon {
+.search-button .material-icons {
     margin-bottom: 4px;
 }
 
