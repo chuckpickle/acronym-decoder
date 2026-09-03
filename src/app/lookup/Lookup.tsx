@@ -21,7 +21,32 @@ export interface LookupProps {
     definitions: LookupModel[];
 }
 
-// Placeholder: migrated by Child A (see MIGRATION.md).
 export function Lookup({lookupWord, definitions}: LookupProps) {
-    return <div className="lookup-popup">{lookupWord}: {definitions.length} definition(s)</div>;
+    return (
+        <div className="lookup-popup">
+            {definitions.length > 0 ? (
+                <div>
+                    <a className="header">{lookupWord}</a>
+                    <ol>
+                        {definitions.map((def, i) => (
+                            <li key={i}>
+                                <p>{def.definition}</p>
+                                <ul>
+                                    {(def.links ?? []).map((link, j) => (
+                                        <li key={j}>{link.name}:{' '}
+                                            <a href={link.link} target="_blank" rel="noopener noreferrer">{link.link}</a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </li>
+                        ))}
+                    </ol>
+                </div>
+            ) : (
+                <div>
+                    <p>No definition found</p>
+                </div>
+            )}
+        </div>
+    );
 }
