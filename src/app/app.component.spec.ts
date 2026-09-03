@@ -1,4 +1,4 @@
-<!--
+/*
 SPDX-Copyright: Copyright (c) Capital One Services,LLC
 SPDX-License-Identifier: Apache-2.0
 
@@ -12,20 +12,21 @@ Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License.
--->
+ */
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Acronym Decoder Chrome Extension</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-          rel="stylesheet">
-    <base href="/">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-<app-root></app-root>
-</body>
-</html>
+import { TestBed, waitForAsync } from '@angular/core/testing';
+import { AppComponent } from './app.component';
+describe('AppComponent', () => {
+    beforeEach(waitForAsync(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                AppComponent
+            ],
+        }).compileComponents();
+    }));
+    it('should create the app', waitForAsync(() => {
+        const fixture = TestBed.createComponent(AppComponent);
+        const app = fixture.debugElement.componentInstance;
+        expect(app).toBeTruthy();
+    }));
+});
