@@ -14,18 +14,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License.
 -->
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Acronym Decoder Chrome Extension</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-          rel="stylesheet">
-    <base href="/">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-<app-root></app-root>
-</body>
-</html>
+<div class="lookup-popup">
+    <div *ngIf="definitions.length > 0">
+        <a class="header">{{lookupWord}}</a>
+        <ol>
+            <li *ngFor="let def of definitions">
+                <p>{{def.definition}}</p>
+                <ul>
+                    <li *ngFor="let link of def.links">{{link.name}}:
+                        <a [href]="link.link" target="_blank" rel="noopener noreferrer">{{link.link}}</a>
+                    </li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+    <div *ngIf="definitions.length === 0">
+        <p>No definition found</p>
+    </div>
+</div>
