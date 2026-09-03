@@ -21,7 +21,7 @@ See the License for the specific language governing permissions and limitations 
   </div>
   <div class="header">
     <img id="icon" class="extension-icon"
-      [src]="isBackendOnline ? $safeNavigationMigration(config?.onlineIconPath) : $safeNavigationMigration(config?.offlineIconPath)"/>
+      [src]="isBackendOnline ? config?.onlineIconPath : config?.offlineIconPath"/>
   </div>
   <div class="text-center">
     <p id="description">Acronyms & Terms - Decoded</p>
@@ -76,7 +76,7 @@ See the License for the specific language governing permissions and limitations 
   <div class="bottom-info">
     <hr>
       <div class="text-center link">
-        <a id="email" (click)="openDefaultEmail($safeNavigationMigration(config?.contactEmail))">{{config?.contactEmail}}</a>
+        <a id="email" (click)="openDefaultEmail(config?.contactEmail)">{{config?.contactEmail}}</a>
       </div>
 
       <p id="version">v{{extensionVersion}}</p>
