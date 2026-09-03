@@ -12,8 +12,5 @@
     "**/*.spec.ts",
     "testing/**/*.ts",
     "background.ts"
-  ],
-  "angularCompilerOptions": {
-    "strictTemplates": false
-  }
+  ]
 }

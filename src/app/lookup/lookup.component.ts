@@ -14,14 +14,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {ChangeDetectorRef, Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {LookupModel} from '../models/lookup.model';
 
 @Component({
     selector: 'app-lookup',
     templateUrl: './lookup.component.html',
     styleUrls: ['./lookup.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class LookupComponent implements OnInit {

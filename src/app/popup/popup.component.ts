@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DefinitionService} from '../core/definition/definition.service';
 import {ConfigurationService} from '../core/configuration/configuration.service';
 import openOptionsPage = chrome.runtime.openOptionsPage;
@@ -26,7 +26,6 @@ import { openDefaultEmailAddress } from '../../background';
     selector: 'app-popup',
     templateUrl: './popup.component.html',
     styleUrls: ['./popup.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class PopupComponent implements OnInit {

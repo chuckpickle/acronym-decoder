@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and limitations 
 <div id="decoderOptions">
   <div id="optionsContainer">
     <div class="text-center">
-      <img id="icon" class="logo" [src]="$safeNavigationMigration(config?.mainIconPath)"/>
+      <img id="icon" class="logo" [src]="config?.mainIconPath"/>
 
       <p id="version">v{{extensionVersion}}</p>
     </div>
@@ -30,7 +30,7 @@ See the License for the specific language governing permissions and limitations 
         </p>
         <p>
           For more info on Acronym Decoder and how to use it, visit our
-          <a [href]="$safeNavigationMigration(config?.extensionInfoPageLink)" target="_blank" rel="noopener noreferrer">
+          <a [href]="config?.extensionInfoPageLink" target="_blank" rel="noopener noreferrer">
             {{config?.extensionInfoPageName}}
           </a>
           or join our Slack channel
