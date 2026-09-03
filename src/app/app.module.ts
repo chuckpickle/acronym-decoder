@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and limitations 
 import {NgModule, Directive, Input} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 
 import {AppRoutingModule} from './app-routing.module';
 
@@ -27,7 +27,6 @@ import {PopupComponent} from './popup/popup.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ConfigurationService} from './core/configuration/configuration.service';
 import {AppMaterialModule} from './custom-modules/app-material.module';
-import {FlexLayoutModule} from '@angular/flex-layout';
 import {LookupComponent} from './lookup/lookup.component';
 import {CoreModule} from './core/core.module';
 
@@ -42,8 +41,7 @@ import {CoreModule} from './core/core.module';
         CoreModule,
         AppRoutingModule,
         NgbModule,
-        FlexLayoutModule,
-        AppMaterialModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
+        AppMaterialModule], providers: [provideHttpClient(withXhr(), withInterceptorsFromDi())] })
 export class AppModule {
 }
 
