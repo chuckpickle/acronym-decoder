@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {NgModule, provideZoneChangeDetection} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
@@ -41,7 +41,7 @@ import {CoreModule} from './core/core.module';
         CoreModule,
         AppRoutingModule,
         NgbModule,
-        AppMaterialModule], providers: [provideZoneChangeDetection(), provideHttpClient(withInterceptorsFromDi())] })
+        AppMaterialModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {
 }
 
